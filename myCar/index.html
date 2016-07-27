@@ -161,7 +161,7 @@
     $(function(){
 
         getCurrentUser().done(function(){       
-            console.log('currentUser is:'+ currentUser.userId);
+            alert('L164 currentUser is:'+ currentUser.userId);
             $.ajax({
                 url: window.TCManagePlantformServer + 'vehicle?userId='+ currentUser.userId,            
                     type: 'get',
@@ -206,7 +206,7 @@
 
 
     function getVehicle(data){
-        console.log(data);
+        alert('getVehicle\n'+data);
         if(data.serviceResult.operationResult == 0){
             if(data.list.length > 0){
                 //如果用户已经有绑定的车，并且
