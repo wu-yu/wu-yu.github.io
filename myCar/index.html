@@ -161,7 +161,7 @@
     $(function(){
 
         getCurrentUser().done(function(){       
-
+            alert('currentUser is:'+ currentUser.userId);
             $.ajax({
                 url: window.TCManagePlantformServer + 'vehicle?userId='+ currentUser.userId,            
                     type: 'get',
