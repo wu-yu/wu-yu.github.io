@@ -100,6 +100,7 @@ function getCurrentUser(){
 }
 
 function getUserByAjax(){
+    alert('L103 currentUser\n:'+window.currentUser.userId);
     var dtd = $.Deferred();
     $.ajax({
         url: window.TCManagePlantformServer+'user/' + window.currentUser.userId+'?criteria=USERID',
@@ -111,6 +112,7 @@ function getUserByAjax(){
         }, 
     })
     .done(function(rs) {
+        alert('rs:\n'+JSON.stringify(rs));
         if(rs.serviceResult.operationResult == 0){   
             if(rs.list.length > 0){
                 window.currentUser = rs.list[0]; 
