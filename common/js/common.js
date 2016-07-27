@@ -1,8 +1,3 @@
-console.log = function(title,content){
-    var loggerServer = 'http://172.21.26.175:5555/log';
-    $.post(loggerServer,{"title":title,"content":content});
-}
-
 window.TCManagePlantformServer = {};
 window.currentUser = {};
 
@@ -68,7 +63,7 @@ function setAjaxHeaderTokens(xhr){
 获取当前服务器地址
 **/
 function getCurrentServer(){
-    console.log("getCurrentServer L66");
+    alert("getCurrentServer L66");
     var dtd = $.Deferred(); 
 
     webViewJavascriptBridgeReady(function(){
@@ -86,7 +81,7 @@ function getCurrentServer(){
 获取当前用户
 **/
 function getCurrentUser(){
-    console.log('getCurrentUser L83');
+    alert('getCurrentUser L83');
     var dtd = $.Deferred(); 
     getCurrentServer().done(function(){
         
