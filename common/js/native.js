@@ -94,7 +94,7 @@ function nativeEncrypt(obj,callback){
 */  
 function nativeGetInitData(callback){		
     window.WebViewJavascriptBridge.callHandler('getInitData','',function(rs){
-    	alert('nativeGetInitData\n'+rs);
+    	console.log('nativeGetInitData\n'+rs);
     	var data = JSON.parse(rs);
         sessionStorage.geelyapp_userId = data.userId;//用户id
         window.TCManagePlantformServer = sessionStorage.geelyapp_server = 'http://'+ data.baseUrl + '/geelyTCAccess/tcservices/';//服务器地址                
