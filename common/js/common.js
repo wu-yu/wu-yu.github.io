@@ -63,6 +63,7 @@ function setAjaxHeaderTokens(xhr){
 获取当前服务器地址
 **/
 function getCurrentServer(){
+    alert("getCurrentServer L66");
     var dtd = $.Deferred(); 
 
     webViewJavascriptBridgeReady(function(){
@@ -80,7 +81,7 @@ function getCurrentServer(){
 获取当前用户
 **/
 function getCurrentUser(){
-
+    alert('getCurrentUser L83');
     var dtd = $.Deferred(); 
     getCurrentServer().done(function(){
         
