@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title data-localize="accountManagePageTitle"></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+</head>
+
+<style type="text/css">
+
+    .spanInfo{
+        display: inline-block;
+        word-break: break-word;
+        padding-right: 30px;
+    }
+    
+    .roleNameSpan{
+        display: block;
+    }
+
+    .fa-radio{
+        font-size: 2.2rem !important;
+    }
+
+    #main input{
+        width:70%;
+    }
+
+    .inputInfo,span{
+        border-bottom: none;
+        color:rgba(255,255,255,0.8);
+    }
+
+    div.logout{
+        margin-top: 50px;
+        width: 100%;
+    }
+
+</style>
+
+<body>
+
+    <section id="main" class="">
+            <ul class="list-group fullWidthList">
+                <li class="caption list-group-item clearfix" data-localize="baseInfo">
+                    
+                </li>
+                <li class="list-group-item clearfix">
+                    <span data-localize="userId"></span>：
+                    <span data-bind-baseinfo='userId'></span>
+                </li>
+                <li class="list-group-item clearfix">
+                    <span class="fa fa-pencil-square-o pull-right"></span>
+                    <span data-localize="truename"></span>：
+                    <span  data-bind-baseinfo='name' class="spanInfo"></span>    
+                    <input data-bind-baseinfo='name' type="text" value="" class="inputInfo noborder_in hidden">                      
+                </li>
+                <li class="list-group-item clearfix">
+                    <span class="fa fa-pencil-square-o pull-right"></span>                
+                    <span data-localize="address"></span>：
+                    <span  data-bind-baseinfo='address' class="spanInfo"></span>   
+                    <input data-bind-baseinfo='address' type="text" value="" class="inputInfo noborder_in hidden">                              
+                </li>
+                <li class="list-group-item clearfix">
+                    <span class="fa fa-pencil-square-o pull-right"></span>                
+                    <span data-localize="email"></span>：
+                    <span  data-bind-baseinfo='email' class="spanInfo"></span>   
+                    <input data-localize='true' data-bind-baseinfo='email' type="email" pattern='\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}' validate_msg='emailformaterror' value="" class="inputInfo noborder_in hidden">                              
+                </li>
+                <li class="list-group-item clearfix">
+                    <span class="fa fa-pencil-square-o pull-right"></span>                
+                    <span data-localize="emergencyContactName"></span>：
+                    <span  data-bind-baseinfo='emergencyContactName' class="spanInfo"></span>   
+                    <input data-bind-baseinfo='emergencyContactName' type="text" value="" class="inputInfo noborder_in hidden">                              
+                </li>                
+                <li class="list-group-item clearfix">
+                    <span class="fa fa-pencil-square-o pull-right"></span>                
+                    <span data-localize="emergencyContactPhone"></span>：
+                    <span  data-bind-baseinfo='emergencyContactPhone' class="spanInfo"></span>   
+                    <input data-localize='true' data-bind-baseinfo='emergencyContactPhone' pattern='^[0-9]{1,20}$' validate_msg="mobilephoneValidateMsg" type="number"  class="inputInfo noborder_in hidden">                              
+                </li>                
+                <br>
+                <li class="caption list-group-item clearfix" data-localize="securityInfo">
+                    
+                </li>
+                <a class="list-group-item clearfix" href="./passwordModify.html">
+                    <span class="fa fa-angle-right pull-right"></span>
+                    <span data-localize="modifyLoginPassword"></span>   
+                </a>
+                <a class="list-group-item clearfix" href="./phoneNumModify.html">
+                    <span class="fa fa-angle-right pull-right"></span>
+                    <span data-localize="phoneNum"></span>：
+                    <span id="mobilePhoneSpan"></span>    
+                </a>
+                <!-- 
+                <a class="list-group-item clearfix" id="role_Li" href='#'>
+                    <span class="fa fa-angle-right pull-right"></span> 
+                    <span data-localize="accountRole"></span>：
+                    <span data-bind-baseinfo='role'></span>
+                </a>      
+                -->
+<!--                 <a class="list-group-item hidden" id="muti_user_manage" href='./accountList.html'>
+                    <span class="fa fa-angle-right pull-right"></span>
+                    <span data-localize="mutiAccountManage"></span>
+                </a>               
+                <li class="list-group-item" id="del_account_li">
+                    <span class="fa fa-angle-right pull-right"></span>                
+                    <span data-localize="delAccount"></span>
+                </li>
+                -->  
+            </ul>        
+
+
+            <div class="logout container text-center clearfix">
+                <button id="logoutbtn" type="button" class="btn btn-default btn-block" data-localize="logout"></button>
+            </div>
+
+    </section>
+	
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../common/js/native.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/util.js"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src='./js/accountManage.js?v=4'></script>
+</html>

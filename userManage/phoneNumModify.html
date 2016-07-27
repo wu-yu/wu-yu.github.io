@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title data-localize='phoneModifyTitle'></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+
+</head>
+
+<style type="text/css">
+    .btn-default:disabled{
+        color:black;
+    }  
+
+    .form-control :focus{
+        box-shadow: none;
+        -webkit-box-shadow: none;
+
+    }
+</style>
+
+<body>
+
+<!--     <section id="step1">
+    <ul class="list-group fullWidthList">
+        <li class="list-group-item clearfix">
+            <span data-localize='originPhone'></span>：<span>+86</span>&nbsp;&nbsp;<span id="originPhone"></span>                    
+        </li>            
+        <li class="list-group-item clearfix">
+            <input id="password" type="password" required class="nobotton noborder_in fullwidth" data-localize='placeholder11' placeholder=''>
+        </li>
+    </ul>    
+    <div class="text-center">
+        <button id="btn_step1" class="btn btn-info" data-localize='nextStep'></button>    
+    </div>           
+</section> -->
+
+
+    <section id="step2">
+        <ul class="list-group fullWidthList">
+<!--             <li class="list-group-item clearfix">
+                <span class="fa fa-angle-right pull-right"></span>
+                <span data-localize='countryOrarea'>：</span>
+                <span>中国</span>&nbsp;&nbsp;<span>+86</span>                    
+            </li>         -->    
+            <li class="list-group-item clearfix">
+                <input id="phoneNum" type="number" required  pattern='^[0-9]{1,20}$' validate_msg="mobilephoneValidateMsg" class="noborder_in fullwidth" data-localize='placeholder12' placeholder=''>
+            </li>
+            
+            <li class="list-group-item clearfix">
+                <div class="input-group">
+                    <input type="number" name="" id="yzmIn" class="noborder_in fullwidth" value="" required="required" pattern="" data-localize='placeholder6' placeholder="" style="color:rgba(255,255,255,0.8)">
+                    <span class="input-group-btn">
+                        <button id="sendYZM" class="btn btn-default" style="width:120px" type="button" data-localize="getValidatecode"></button>
+                    </span>
+                </div>                
+            </li>
+           
+        </ul>    
+
+        <div class="text-center">
+            <button id="btn_step2" class="btn btn-info" data-localize='modify'></button>    
+        </div>           
+    </section>
+
+
+	
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+<script src='../common/js/native.js'></script>
+<script src="../common/js/common.js"></script>
+<script src="../common/js/msgAuthCode.js"></script>
+<script src="../common/js/util.js"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+
+<script>
+
+    $(function(){        
+        getCurrentUser().done(function(){
+            $('#originPhone').text(utiljs.getStarMobileNumber(currentUser.mobilePhone));  
+        })        
+    }) 
+
+    $("#btn_step2").click(function(event) {
+        if(areaCheck($("#step2"))){
+            validYZM($.trim($('#phoneNum').val()),$.trim($('#yzmIn').val()))
+                .done(modifyPhone);                            
+        } 
+    });
+
+
+    function modifyPhone(){
+        currentUser.mobilePhone = $('#phoneNum').val();
+        jQuery.ajax({
+          url: window.TCManagePlantformServer + 'user/' + currentUser.userId + '?operation=mod',
+          type: 'put',
+          dataType: 'json',
+          contentType:'application/json',
+          data: JSON.stringify(currentUser),
+          beforeSend:function(xhr){
+              setAjaxHeaderTokens(xhr);
+          }, 
+          success: function(data) {
+            console.log(data);
+            if(data.operationResult == 0){  
+                nativeAlert($.i18n.prop('success'));
+                location.href='./accountManage.html';                                        
+            }else{
+                nativeAlert($.i18n.prop(data.error.code))                 
+            }                           
+          },
+        });          
+    }
+
+
+    $('#sendYZM').click(function(event) {
+        $.blockUI();
+        sendPhoneYzm($('#phoneNum').val(),'sendYZM')
+            .done(function(){
+                nativeToast($.i18n.prop('validateCodeSended'));
+            })
+            .always(function(){
+                $.unblockUI();
+            });
+    });
+
+
+
+</script>
+
+</html>

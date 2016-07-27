@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title data-localize='bindNewCarTitle'></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+    <link href="../common/css/common.css" rel="stylesheet">    
+
+
+
+</head>
+
+<style type="text/css">
+    
+    .stepSection{
+        padding-top:30px;
+        text-align: center;
+    }
+
+    .stepSection  .container{
+        margin: 15px;
+        padding: 0px 15px 10px 15px;
+    }
+
+    .hint{
+        color:gray;
+    }
+
+    .stepSection  .input-group{
+        margin: 0 auto;
+    }
+
+    .stepSection  .input-group .btn{
+        padding: 2px 2px;
+        border-radius: 0 0 0;
+    }
+
+    .btn-default:disabled{
+        color: black;
+    }
+
+
+
+</style>
+
+<body>
+
+    <section id="bindCarSection" class="stepSection">
+        
+        <ul class="list-group fullWidthList">
+            <li class="list-group-item">
+                <input data-localize='placeholder7' id="carVin" type="text"  required class="noborder_in fullwidth" placeholder=''>                
+            </li>
+            <li class="list-group-item">
+                <input id="phoneNum" type="text" required class="noborder_in fullwidth" data-localize='placeholder15' placeholder="" pattern="^[0-9]{1,20}$" validate_msg="mobilephoneValidateMsg">
+            </li>
+        </ul>       
+
+        <div class="col-xs-12">
+            <button id="submitBtn" class="btn btn-info btn-block" data-localize='submit'></button>
+        </div>
+
+    </section>
+    
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src='../common/js/native.js'></script>
+<script src="../common/js/common.js"></script>
+<script src='../common/js/msgAuthCode.js'></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+
+<script>
+
+$(function(){
+    getCurrentUser();
+})
+
+$("#submitBtn").click(function(event) {
+
+    var phoneNum=$('#phoneNum').val();
+    if(areaCheck($("#bindCarSection"))){
+        var vin = $('#carVin').val();
+        currentUser.vin = vin;
+        var customerPhone = $('#phoneNum').val();
+        validateVinAndPhone(customerPhone);
+    }
+});
+
+//校验vin码和手机号码
+function validateVinAndPhone(customerPhone){
+    $.blockUI();
+    $.ajax({
+      url: window.TCManagePlantformServer + 'user/'+ currentUser.userId +'?operation=bind'+'&customerPhone='+customerPhone,
+      type: 'put',
+      dataType: 'json',
+      data: JSON.stringify({"vin":currentUser.vin,"userId":currentUser.userId}),
+      contentType:'application/json',
+      beforeSend:function(xhr){
+          setAjaxHeaderTokens(xhr);
+      }, 
+      success: function(data) {
+            console.log(JSON.stringify(data));        
+            if(data.operationResult == 0){
+                validateSuccess(customerPhone,currentUser.vin);                                        
+            }else{
+                nativeAlert($.i18n.prop(data.error.code));
+            }                
+      },
+      complete:function(){
+        $.unblockUI();
+      }
+    });
+}
+
+//校验vin码和手机号码成功后执行的方法
+function validateSuccess(customerPhone,vin){
+    location.href='./bindNewCar2.html?customerPhone='+customerPhone+'&vin='+vin;
+}
+
+</script>
+</html>

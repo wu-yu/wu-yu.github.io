@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title>导航首页</title>
+    <link href="../common/css/bootstrap.min.css" rel="stylesheet" type="text/css" >
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css?v=1" rel="stylesheet">      
+    <link href="http://cache.amap.com/lbs/static/main1119.css" rel="stylesheet"/>
+    <link href="../common/css/sweetalert.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/swiper.min.css"> 
+    <link rel="stylesheet" href="css/load5.css">      
+    <link href="./css/navigationIndex.css?v=9" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/searchNearBy.css">
+
+</head>
+
+<style type="text/css">
+
+</style>
+
+<body>
+    <!--导航首页 -->
+    <section id="s_map" class="s_map">
+        <div class="searchArea2">
+                <div class="return" id="return"><img src="image/return.png"></div>           
+                <input id="search_in" class="form-control s_search_in2 searchIcon2" type="text" data-localize="search" />  
+        </div>
+
+         <div class='cover' id ='cover' style="width: 100%;height: 100%;position: fixed;z-index: 1000;background: rgba(0,0,0,0.2);">
+           <div class="load-container load5"><div class="loader">Loading...</div></div>
+         </div>
+        
+          <div class="hoptions nearPoint hide" style="height: 150px">
+            <div class="history_item auto-item list-group" id="listSearch-group4" style="height: 100%">
+                    <div class="list-group-item row hide">
+                          <div class="col-md-9">
+                            <span class="name"></span>
+                            <span class="auto-item-span district"></span>
+                          </div>
+                          <div class="col-md-3">
+                              <img src="image/map_arrow_more@2x.png" />
+                          </div> 
+                    </div>   
+              </div>
+        </div> 
+
+        <div style="height:100%;">
+            <div id="sslk_1" class="icon02 iconroadinfo_new">
+              <img src="image/map_traffic@2x.png" alt="路况图标">
+            </div>
+           <!--  <div id="chargingPile" class="chargingPile">
+              <img src="image/map_oil@2x.png" alt="充电桩">
+            </div>     -->
+            <div id="curLocation" class="mylocation">
+              <img src="image/map_people@2x.png" alt="我的位置" />
+            </div> 
+            <div id="carLocation" class="carlocation">
+                <img src="image/control_vehicle_positioning_click@3x.png" alt="车辆的位置">
+            </div>                                           
+            <div class="map_area">
+                <div id="map" class="amap"></div>
+            </div>    
+        </div> 
+        <div class="downList" id="downList">
+                <div class="list-group">
+                      <div class="list-group-item " id="topUp_img">
+                          <div class="top_img" >
+                              <img src="image/map_arrow_top@2x.png" class="up-arrow">
+                          </div>
+                          <div data-localize="myPosition" id="mylocation"></div>
+                          <div class="locationName"></div>
+                          <div class='nearLocation hide'></div>
+                      </div>
+                      <div class="list-group-item secondList swiper-container">
+                        <div class="swiper-wrapper">
+                          <div class="rowOne swiper-slide">
+                              <div class="col-md-3" id="sendToCar" requiredCapability="send_to_car">
+                                  <div>
+                                      <img src="image/map_launch@2x.png" >
+                                      <span data-localize="sendToVehicle"></span>
+                                  </div>
+                              </div>
+                              <div class="col-md-3" id="carWash">
+                                  <div>
+                                      <img src="image/control_car_wash_business_click@2x.png" >
+                                      <span data-localize="carWash"></span>
+                                  </div>
+                              </div>
+                              <div class="col-md-3" id="navigation">
+                                  <div>
+                                      <img src="image/control_navigation_control_click@2x.png" >
+                                      <span data-localize="navigation"></span>
+                                  </div>
+                              </div>
+                              <div class="col-md-3" id='chargingSpot' requiredCapability="find_charging_pile">
+                                   <div>
+                                      <img src="image/control_charging_pile_click@3x.png" >
+                                      <span data-localize="chargingSpot"></span>
+                                   </div>
+                              </div>
+                              <div class="col-md-3" id="parkingLot">
+                                    <div>
+                                      <img src="image/control_parking_space_click@3x.png" >
+                                      <span data-localize="parkingLot"></span>
+                                   </div>
+                              </div>
+                          </div>
+                          <div class="rowTwo swiper-slide hide">
+                             <!--  <div class="col-md-3" id="washCar">
+                                  <div>
+                                      <img src="image/control_car_wash_business_click@2x.png" >
+                                      <span data-localize="washCar"></span>
+                                  </div>
+                              </div> -->
+                          </div>
+                        </div>  
+                      </div>
+                      <div class="list-group-item telName row">
+                          <div class="col-md-3" data-localize="tel"></div>
+                          <a class="col-md-9" id="tel"></a>
+                      </div>
+                      <div class="list-group-item l_road row">
+                          <div class="col-md-9" data-localize="pathNavigation"></div>
+                          <div class="col-md-3 right-arrow">
+                            <img src="image/map_arrow_right@2x.png">
+                          </div>
+                      </div>
+                </div>
+          </div>          
+    </section>
+    
+    <!-- 路径规划输入页面 -->
+    <section id="s_driving" class="s_driving hide">
+        <div class="headbar text-center planning">
+            <div class="container">
+                <span id="driving_angle" class="back_angle"></span>
+                <span class="sl_title" data-localize="planningRoute"></span>    
+                <button type="button" id="sl_btn" class="sl_btn btn btn-default" data-localize="search"></button>           
+                <button type="button" id="wp_btn" class="sl_btn btn btn-default hidden" data-localize="complete"></button>           
+            </div>
+        </div>        
+        <div id="blockOne" class="blockOne">
+            <div class="d_from_to grid">            
+                <div class="col-xs-10">
+                    <div>
+                        <input id="from_p" class="d_target_in form-control"  type="search" lng='' lat='' data-localize="inputStart">
+                    </div>     
+                    <div>
+                        <input id="to_p" class="d_target_in form-control" type="search"
+                          lng='' lat='' data-localize="inputEnd">
+                    </div>                               
+                </div>
+                <div class="col-xs-2 grid vertical-container exchange_handle">
+                    <!-- <i class="fa fa-exchange exchange"></i>  --> 
+                    <img src="image/map_change@2x.png">            
+                </div>
+            </div>
+            <div class="container text-center clearfix pointSetting">
+                <a id="wayPointSetting" data-localize="pointSetting"></a>                      
+                <span><p id="currentPass" data-localize="currentPass"></p><span id="wayPointCount">0</span></span>
+            </div>             
+        </div>
+
+        <div id="blockTwo" class="blockTwo hidden">
+            <div class="container">
+                <div>
+                    <div class="path" data-localize="path"></div>
+                    <div id="wayPoints" class="wayPoints">
+                    </div>     
+                    <div class="clearfix"></div>                         
+                </div>
+                <br>
+                <div class="grid">
+                    <div class="col-9">
+                        <input id="wayPoint" lng='' lat='' type="text" class="form-control d_target_in">
+                    </div>              
+                    <div class="">
+                        <button id="wpadd_btn" class="btn btn-default" data-localize="add"></button>
+                    </div>                                                   
+                </div>
+            </div>
+        </div>
+        <div class="hoptions" style="height: 400px">
+            <div class="history_item auto-item list-group" id="listSearch-group3" style="height: 100%">
+                    <div class="list-group-item row hide">
+                          <div class="col-md-9">
+                            <span class="name">肯德基肯德基肯德基肯德基肯德基肯德基肯德基肯德基肯德基肯德基</span>
+                            <span class="auto-item-span district">广州市海珠区广州大道南368号广州广州市海珠区广州大道南368号广州广州市海珠区广州大道南368号广州广州市海珠区广州大道南368号广州</span>
+                          </div>
+                          <div class="col-md-3">
+                              <img src="image/map_arrow_more@2x.png" />
+                          </div> 
+                    </div>   
+              </div>
+        </div>
+    </section>
+
+    <!-- 路径规划地图展示 -->
+    <section id="s_driving_map"  class="s_driving_map hide">
+        <div class="headbar text-center planning" id="back_s_driving">
+            <div class="container">
+                <span class="back_angle"></span>
+                <span class="sl_title planningRoute" data-localize="planningRoute"></span>             
+            </div>
+        </div> 
+        <div id="sslk_2" class="icon02">
+            <img src="image/map_traffic@2x.png" >
+        </div>             
+        <div id="driving_map" class="driving_map">
+                
+        </div>
+        <div id="driving_panel" class='driving_panel'></div>  
+        <div id="driving_policy" class="driving_policy grid">
+            <!-- <div class="stc col-1 grid vertical-container" data-localize="sendToVehicle"></div> -->
+            <div name="policy" policy="LEAST_TIME" class="dp active col-1 grid vertical-container" data-localize="shortestTime"></div>
+            <div name="policy" policy="LEAST_DISTANCE" class="dp col-1 grid vertical-container" data-localize="shortestDistance"></div>
+            <div name="policy" policy="LEAST_FEE"  class="dp col-1 grid vertical-container" data-localize="noHighWays"></div>
+        </div>     
+    </section>
+    <!-- 搜索列表页面-->
+    <section id="searchPage" class="listGroupSearch searchPage hide">
+        <div class="searchArea">
+            <div class="row title_top">
+                <div class="returnBack col-md-2" id="returnBack">
+                    <img src="image/title_return@2x.png" alt="">
+                </div>
+                <div class="col-md-10">
+                    <input id="search_in_two" class="form-control white_search search_in_two" type="text" autofocus="autofocus">
+                    <a id="search_in_list" class="search_in_list" data-localize='search'></a>
+                </div>
+            </div>
+            <div class="hoptions">
+              <div class="history_item auto-item list-group hide" id="listSearch-group2">
+                  <div class="list-group-item row hide">
+                      <div class="col-md-9">
+                        <span class="name">肯德基</span>
+                        <span class="auto-item-span district">广州市海珠区</span>
+                      </div>
+                      <div class="col-md-3">
+                          <img src="image/map_arrow_more@2x.png" />
+                      </div> 
+                  </div>   
+              </div>
+              <div class="history_item auto-item list-group" id="listSearch-group1" style="height: 40%">
+                      <div class="list-group-item row hide">
+                          <div class="col-md-9">
+                            <span class="name">肯德基</span>
+                            <span class="auto-item-span district">广州市海珠区</span>
+                          </div>
+                          <div class="col-md-3">
+                              <img src="image/map_arrow_more@2x.png" />
+                          </div> 
+                      </div>
+                      <div class="list-group-item row clearHistory hide" >
+                        <div class="col-md-12">
+                         清除历史记录
+                        </div>
+                      </div>    
+                  </div>
+            </div>
+        </div>
+    </section>
+    <div id="nearByPanel" style="display:none;padding: 0px;position: fixed;left: 0px; top: 0px; width: 100%; height: 100%;"> <!--周边搜索列表界面 start-->
+        <div class="search_nby">
+          <div class="head">
+            <div class="top display-flexbox">
+              <div class="tleft"><i class="fa fa-angle-left"></i></div>
+              <div class="searchType"></div>            
+              <div class="tright">地图</div>
+            </div>          
+            <div class="searchRange" id='searchRange'>
+                <div class="value">
+                  <div class="radius" status="hide">
+                    <span class="searchRadius">2000米</span>&nbsp;&nbsp;<i class="fa fa-angle-down"></i>
+                  </div>
+                </div>
+                <div class="valueSelect hidden">
+                    <ul class="list-group rangeUl">
+                      <li radius='1000'>1000米</li>
+                      <li class="selected" radius='2000'>2000米</li>
+                      <li radius='5000'>5000米</li>
+                      <li radius='5000'>全部范围</li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+          <div class="info">
+            <div class="list poiList">
+            </div>
+            <div class="pageCtrl container">
+              <div class="btn btn-default prePage">上一页</div>
+              <div class="btn btn-default nextPage">下一页</div>
+            </div>          
+          </div>        
+        </div>
+      <!--周边搜索列表界面 end-->     
+    </div>   
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+<script src='../common/js/native.js'></script>
+<script src="../common/js/common.js"></script>
+<script type="text/javascript" src="js/swiper-3.3.1.jquery.min.js"></script>
+<script src="../common/js/handlebars.min.js"></script>
+<script src="http://webapi.amap.com/maps?v=1.3&key=55a22b25e7eca2d94b65a7d47b459364&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Geocoder,AMap.Driving"></script>
+<script src="./js/searchNearBy.js"></script>
+<script src="./js/searchNearByMain.js"></script>
+<script src="./js/mapapp.js?v=2"></script>
+<script src="./js/waypoint.js"></script>
+
+</html>

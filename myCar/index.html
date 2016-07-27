@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title data-localize='myCarTitle'></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css?v=1" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+
+</head>
+
+<style type="text/css">
+
+    .carImg{
+        height: 6rem;
+        margin-right: 1rem;
+    }
+    
+    .fa-angle-right{
+        line-height: 5.5rem !important;        
+    }
+
+    .rg2{
+        line-height: 2rem !important;                
+    }
+
+    a.list-group-item {
+        color: rgba(255,255,255,1);
+    }    
+
+    .guideDiv{
+        margin-top:1.5rem;
+        display:none;        
+    }
+
+    .guideDiv .panel {
+        background: transparent;
+        color: rgba(255,255,255,0.8);
+        border:none;
+    }
+
+    /*解决contenteditable IOS无法输入的问题*/
+    *[contenteditable] {
+        -webkit-user-select: auto !important;
+    }
+
+</style>
+
+<body>
+
+    <section id="carInfoDiv" style="display:none;">
+            <ul class="list-group fullWidthList">
+                <li data-localize='bindedCar' class="caption list-group-item">
+                    
+                </li>
+                <a class="list-group-item" href="./carSwitch.html">
+                    <span class="fa fa-angle-right pull-right"></span>
+                    <span data-bind-car="modelCode"></span>
+                </a>
+
+                <li data-localize='carInfo' class="caption list-group-item">
+                    
+                </li>
+                <li class="list-group-item clearfix">
+                    <div class='row'>
+                        <div class="col-xs-4"><label data-localize='plateNO'></label></div>
+                        <div id="plateNo" class="col-xs-8 editableDiv" contentEditable data-bind-car="plateNo" style="line-height:22px;height:22px;"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label data-localize='carVin'></label></div>
+                        <div class="col-xs-8" data-bind-car="vin"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label data-localize='modelCode'></label></div>
+                        <div class="col-xs-8" data-bind-car="modelCode"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label data-localize='seriesCodeVs'></label></div>
+                        <div class="col-xs-8" data-bind-car="seriesCodeVs"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label  data-localize='engineNo'></label></div>
+                        <div class="col-xs-8" data-bind-car="engineNo"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label  data-localize='Msisdn'></label></div>
+                        <div class="col-xs-8" data-bind-car="msisdn"></div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-4"><label data-localize='color'></label></div>
+                        <div class="col-xs-8" data-bind-car="colorCode"></div>
+                    </div>
+                </li>
+<!--                 <a href="../myCar/pinCodeEdit.html" class="list-group-item clearfix">
+                    <span class="fa fa-angle-right pull-right rg2"></span>                
+                    <span data-localize="pinCode"></span>
+                </a>      -->           
+                <a id="dealerLink" href="../myCar/dealer.html" class="list-group-item clearfix">
+                    <span class="fa fa-angle-right pull-right rg2"></span>                
+                    <div data-localize="defaultDealer"></div>
+                    <div id="dealerShortname" style="color:rgba(255,255,255,0.8);padding-right: 15px;"></div>
+                </a>                
+                <a href="../myCar/drivingLog.html" class="list-group-item clearfix">
+                    <span class="fa fa-angle-right pull-right rg2"></span>                
+                    <span data-localize="drivingLog"></span>
+                </a>      
+                <a id="violationQuery" onclick="violationQuery()" class="list-group-item clearfix">
+                    <span class="fa fa-angle-right pull-right rg2"></span>                
+                    <span data-localize="violationQuery"></span>
+                </a>                                          
+            </ul>        
+    
+    </section>
+
+    <section id="guideDiv" class="container guideDiv">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div data-localize='noCarBindedTip'></div>
+                <br>
+                <div class="text-center">            
+                    <a onclick='location.replace("./bindNewCar.html")' type="button" class="btn btn-info btn-block" data-localize='bindNewCar'></a>
+                </div>            
+            </div>
+        </div>
+    </section>
+
+    <section id="guideDiv2" class="container guideDiv">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div data-localize='noCarRelateTip0'></div>
+                <br>
+                <div class="text-center">            
+                    <a onclick='location.replace("./carSwitch.html")' type="button" class="btn btn-info btn-block" data-localize='associateCar'></a>
+                </div>            
+            </div>
+        </div>
+    </section>    
+	
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src='../common/js/native.js?v=3'></script>
+<script src="../common/js/common.js?v=5"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+
+<script>
+
+    var carModel = new DataModel('car');
+
+    $(function(){
+
+        getCurrentUser().done(function(){       
+
+            $.ajax({
+                url: window.TCManagePlantformServer + 'vehicle?userId='+ currentUser.userId,            
+                    type: 'get',
+                    dataType: 'json',
+                    contentType:'application/json',
+                    beforeSend:function(xhr){
+                        setAjaxHeaderTokens(xhr);
+                    }, 
+                    success:function(rs){                        
+                        getVehicle(rs);
+                    }
+            });   
+
+            if(currentUser.dealerShortname != 'null' && currentUser.dealerShortname != null && currentUser.dealerShortname != ''){
+                getDealerInfo(currentUser.dealerShortname);    
+            }                 
+        });        
+
+    })
+
+
+    function getDealerInfo(dealerShortname){
+        $.ajax({
+            url: window.TCManagePlantformServer + 'dealer/'+currentUser.dealerShortname+'?criteria=DEALER_SHORTNAME&pageSize=10&pageIndex=1',            
+                type: 'get',
+                dataType: 'json',
+                contentType:'application/json',
+                beforeSend:function(xhr){
+                    setAjaxHeaderTokens(xhr);
+                },                           
+                success:function(rs){         
+                    if(rs.serviceResult.operationResult == 0){
+                        $('#dealerShortname').text(rs.list[0].dealerFullname);
+                        $('#dealerShortname').attr('dealerPhoneNum',rs.list[0].phoneNum);
+                        $('#dealerLink').attr('href',"../myCar/dealer.html?"+'dealerName='+encodeURI(rs.list[0].dealerFullname)+"&phone="+encodeURI(rs.list[0].phoneNum));
+                    }else{
+                        nativeToast($.i18n.prop(rs.serviceResult.error.code))
+                    }                                        
+                }
+        });           
+    }
+
+
+    function getVehicle(data){
+        console.log(data);
+        if(data.serviceResult.operationResult == 0){
+            if(data.list.length > 0){
+                //如果用户已经有绑定的车，并且
+                //用户已经关联了车辆，显示该关联车辆，否则默认显示车辆列表
+                if(currentUser.vin != '' && vinInVehicleList(currentUser.vin,data.list)){
+                    var vehicle;  
+                    for(var i in data.list){
+                        if(data.list[i].vin == currentUser.vin){
+                            vehicle = data.list[i];
+                        }
+                    }                     
+                    carModel.setDatas(vehicle); 
+                    $('#carInfoDiv').show();   
+                }else{
+                    //如果有绑定车辆，但是没有关联车辆，提示去关联
+                    $('#guideDiv2').show();
+                    // location.replace('./carSwitch.html');
+                }                  
+            }else{
+                $('#guideDiv').show();
+            }
+        }else{
+            nativeToast($.i18n.prop(data.serviceResult.error.code));
+        }
+    }
+    
+
+    function vinInVehicleList(vin,vehicleList){
+        var flag = false;
+        for(var i in vehicleList){
+            if(vin == vehicleList[i].vin){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    function violationQuery(){
+        setViolationInfo().done(function(){
+            var url = './violationQuery.html';
+            location.href = url;
+        })
+    }
+
+    function setViolationInfo(){
+        var dtd = $.Deferred();
+        var violationQuery={plateNo:carModel.get('plateNo'),vin:carModel.get('vin'),engineNo:carModel.get('engineNo'),ihuId:carModel.get('ihuId')};
+        sessionStorage.violationQuery = JSON.stringify(violationQuery);    
+        dtd.resolve();
+        return dtd.promise();
+    }
+
+    $('#plateNo').on('focus', function(event) {
+        $(this).data('oldval',$(this).text());
+    });
+
+
+    $('#plateNo').on('focusout', function(event) {
+        var plateNoNew = $('#plateNo').text();        
+        var plateNoOld = $('#plateNo').data('oldval');
+        if(plateNoOld != plateNoNew){
+            nativeConfirm($.i18n.prop('valueChanged'),$.i18n.prop('confirm'),$.i18n.prop('cancel'),function(rs){
+                if(rs == 1){
+                     changePlateNo(plateNoNew).done(function(){
+                        carModel.set('plateNo',plateNoNew);
+                        window.WebViewJavascriptBridge.callHandler(
+                            'carSwitch'
+                            , carModel.getDatas()
+                            , function(responseData) {                           
+                                nativeToast($.i18n.prop('modifySuccess'));                                                          
+                            }
+                        );                                                 
+                     }).fail(function(){
+                        nativeToast($.i18n.prop('modifyFailure'));                        
+                     })
+                 }else{
+                    $('#plateNo').text($('#plateNo').data('oldval'));                    
+                 }
+            });
+        }
+    });
+
+
+    function changePlateNo(plateNo){
+        var dtd = $.Deferred();
+        $.ajax({
+            url:window.TCManagePlantformServer +'customer/vehicle/'+carModel.get('vin'),
+            type:'put',
+            dataType:'json',
+            contentType:'application/json',
+            data:'{"plateNo":"'+plateNo+'"}',
+            beforeSend:function(xhr){
+                setAjaxHeaderTokens(xhr);
+            },             
+            success:function(rs){
+                if(rs.operationResult == 0){
+                    dtd.resolve();
+                }else{
+                    dtd.reject();
+                }
+            }
+        })
+        return dtd.promise();
+    }
+
+    // //离开页面之前，如果有信息修改过了，提示是否要保存
+    // window.onbeforeunload = function(){
+    //     var isChanged = false;
+    //     if(!typeof($('#plateNo').data('oldval')) == 'undefined' && $('#plateNo').data('oldval')!= $('#plateNo').text()){
+    //         isChanged = true;
+    //     }
+    //     if(isChanged == true){
+    //         return('您的修改内容还没有保存，确定离开吗？');
+    //     }
+    //     return '1';
+    // }
+
+</script>
+</html>

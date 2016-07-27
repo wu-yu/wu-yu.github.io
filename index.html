@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>引导页面</title>
+        <link rel="stylesheet" type="text/css" href="common/css/bootstrap.min.css">
+	</head>
+	<style>
+		body{
+			margin-bottom: 100px;
+		}
+	</style>
+	<body>
+		<div class="page-header" style="border-bottom:none">
+		  
+
+		  <h1>引导页面&nbsp;&nbsp;&nbsp;&nbsp;<button id="login" type="button" class="btn btn-primary">登录</button></h1>
+
+		</div>
+		<ul class="list-group">
+			<li class="list-group-item"><a href="friend/friendAccess.html">friend/friendAccess.html</a></li>
+			<li class="list-group-item"><a href="serviceStore/ServiceStore.html">serviceStore/serviceShop.html</a></li>
+			<li class="list-group-item"><a href="map/navigationIndex.html">map/navigationIndex.html</a></li>
+			<li class="list-group-item"><a href="myCar/index.html">myCar/index.html</a></li>
+			<li class="list-group-item"><a href="myCar/carSwitch.html">myCar/carSwitch.html</a></li>
+			<li class="list-group-item"><a href="myCar/bindNewCar.html">myCar/bindNewCar.html</a></li>
+			<li class="list-group-item"><a href="myCar/drivingLog.html">myCar/drivingLog.html</a></li>
+			<li class="list-group-item"><a href="myCar/dealer.html">myCar/dealer.html</a></li>
+			<li class="list-group-item"><a href="myCar/violationQuery.html">myCar/violationQuery.html</a></li>
+			<li class="list-group-item"><a href="myCar/pinCodeEdit.html">myCar/pinCodeEdit.html</a></li>
+			<li class="list-group-item"><a href="userManage/accountManage.html">userManage/accountManage.html</a></li>
+			<li class="list-group-item"><a href="userManage/passwordModify.html">userManage/passwordModify.html</a></li>
+			<li class="list-group-item"><a href="userManage/phoneNumModify.html">userManage/phoneNumModify.html</a></li>
+			<li class="list-group-item"><a href="userManage/forgetPassword.html">userManage/forgetPassword.html</a></li>
+			<li class="list-group-item"><a href="userManage/userRegist.html">userManage/userRegist.html</a></li>
+		</ul>
+
+<!-- 		<div class="container">
+			<label for="">输入需rsa加密的字符串：</label>			
+			<div class="input-group">
+				<input id="rsaIn" type="text" class="form-control">	
+				<span class="input-group-btn">
+					<button id="rsaEncrypt" type="button" class="btn btn-default">加密</button>
+				</span>
+			</div>
+			<br>
+			<label for="">rsa加密结果：</label>
+			<br>
+			<textarea id='rsaResult' class="form-control" name="" id="" cols="30" rows="10"></textarea>			
+		</div> -->
+	</body>
+
+	<script src="common/js/jquery-1.11.0.min.js"></script>
+	<script src="common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+	<script src='common/js/native.js?v=3'></script>	
+	<script src="common/js/common.js?v=44"></script>
+	<script type="text/javascript">
+
+			$('#login').click(function(event) {
+				$.ajax({
+				    url:window.TCManagePlantformServer+'user/login',
+				    type:'post',
+				    dataType:'json',
+				    contentType:'application/json',
+				    data:'{"username":"Tcgeelytest3","password":"PGVcb+5Ny/s2Qo2xXYWxjQHZ0JILbMOuoKM1nG4uh+6jc1se7/Kg1vt2ni+qogNBaX+pEIEDg/Ch4EL+Y5IWfZ7zDSrZv4tQ2P4m+1uwLssDR0W19qPxY4vadYk5YwaJ/Gfe7X3RMtVRO4PPx/VBjOuDzB3KmkBMhtmJpZK2h5A=","language":"zh_Cn","registrationId":"170976fa8a82230bca4"}',            
+				    success:function(rs){
+				    	if(rs.accessToken){
+				    		alert('登录成功');
+				    		sessionStorage.tcTokens = JSON.stringify(rs);
+				    	}else{
+				    		alert('登录失败,原因是：'+rs.resultMessage);
+				    	}
+				        
+				    }
+				}) 	
+			});			
+
+
+			$('#rsaEncrypt').click(function(event) {
+				var str = $('#rsaIn').val();
+				nativeEncrypt([str],function(rs){
+					$('#rsaResult').text(rs);
+				})
+			});
+
+	</script>
+</html>

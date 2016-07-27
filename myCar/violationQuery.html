@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+    <meta name="renderer" content="webkit">
+
+    <title data-localize='violationQuery'></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css?v=1" rel="stylesheet">    
+    <link href="../common/css/citySelect.css" rel="stylesheet">
+    <link href="../common/css/sweetalert.css" rel="stylesheet">
+
+</head>
+
+<style type="text/css">
+    .list-group-item{
+        background-color: transparent;
+    }
+    .citybelong{
+        position: relative;
+        cursor: pointer;        
+    }
+    .citybelong:active{
+        background-color: rgba(255,255,255,.1);
+    }
+
+    .carInfoUl label,input{
+        vertical-align: sub;
+    }
+</style>
+
+<body>
+    <div id='main' class="">
+        <section id="carInfoDiv">
+                <ul class="list-group fullWidthList carInfoUl">
+                    <li data-localize='carInfo' class="caption list-group-item"></li>
+                    <li class="list-group-item clearfix">
+                        <div class='row'>
+                            <div class="col-xs-4"><label data-localize='plateNO'></label></div>
+                            <div class="col-xs-8"><input id="plateNo" class="noborder_in_outline fullwidth" required="" data-localize="placeholder19" type="text" data-bind-car="plateNo"></div>
+                        </div>
+                        <div class='row'>
+                            <div class="col-xs-4"><label data-localize='carVin'></label></div>
+                            <div class="col-xs-8"><input id="vin" pattern="^[A-Za-z0-9]{17}$" validate_msg="vinValidateMsg" data-localize="placeholder20" type="text" class="noborder_in_outline fullwidth"  data-bind-car="vin"></div>
+                        </div>
+                        <div class='row'>   
+                            <div id="engineNo" class="col-xs-4"><label  data-localize='engineNo'></label></div>
+                            <div class="col-xs-8"><input  required validate_msg="engineNoValidateMsg" data-localize="placeholder18"  data-bind-car="engineNo" class="noborder_in_outline fullwidth"  type="text"></div>
+                        </div>
+                        <div id="selectCity" class='row citybelong'>
+                            <div class="col-xs-4"><label  data-localize='BelongTo'></label></div>
+                            <div class="col-xs-8"><span id="belongCity"></span></div>
+                            <span class="fa fa-angle-right pull-right rg2"></span>                            
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button id="query" type="button" class="btn btn-default btn-block" data-localize='query'></button>                    
+                        </div>                         
+                    </li>           
+                </ul>
+             
+        </section> 
+        <br>
+        <section id="violation">
+            <ul id="violationList" class='list-group fullWidthList'>
+<!--                 <li class="list-group-item">
+                    <table>
+                        <tr>
+                            <td><span>时间：</span><span>2015-03-05 10:17:00</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>地址：</span><span>北京市西城区灵境胡同西口 西向东</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>罚款：</span><span>100</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>扣分：</span><span>0</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>违章类型：</span><span>未按尾号限制通行的</span></td>
+                        </tr>
+                        <tr>
+                            <td><span>处理情况：</span><span>已处理</span></td>
+                        </tr>
+                    </table>
+                </li> -->
+            </ul>
+        </section>                    
+    </div>
+
+    <div id="city" class="cityArea">
+        
+    </div>
+    
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src='../common/js/native.js'></script>
+<script src="../common/js/common.js?v=1"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+<script src="../common/js/handlebars.min.js"></script>
+<script src="../common/js/citySelect.js"></script>
+<script src="./js/violationQuery.js"></script>
+
+<script id="template" type="text/x-handlebars-template">
+    {{#each this}}
+        <li class="list-group-item">
+            <table>
+                <tr>
+                    <td><span>时间：</span><span>{{time}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>地址：</span><span>{{address}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>罚款：</span><span>{{fine}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>扣分：</span><span>{{point}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>违章类型：</span><span>{{violation_type}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>机构:</span><span>{{agency}}</span></td>
+                </tr>
+                <tr>
+                    <td><span>处理情况：</span><span>{{handled}}</span></td>
+                </tr>
+            </table>
+        </li>
+    {{/each}}
+</script>
+
+
+</html> 

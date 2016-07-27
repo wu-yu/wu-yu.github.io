@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+    <meta name="renderer" content="webkit">
+
+    <title data-localize='selectDealer'></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css?v=1" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+
+</head>
+
+<style type="text/css">
+    html,body{
+        height: 100%;
+        width: 100%;
+    }
+
+    .curDealer{
+        background: rgba(255,255,255,0.3);     
+        margin-top: 15px;
+        margin-bottom: 15px;
+        position: relative;       
+    }
+
+    .curDealer .dealerName{
+        padding: 3px 0px;
+        padding-right: 30px;
+    }
+
+    .curDealer .fa-phone{
+       position: absolute;
+       top:50%;
+       transform:translateY(-50%);
+        -webkit-transform: translateY(-50%);       
+        font-size: 30px;
+        right: 5px;   
+    }
+    
+    .hintDiv{
+        background-color: white;        
+        margin-top: 5px;
+        overflow: auto;
+        -webkit-box-shadow:0 0 5px rgba(255,255,255,1);
+        -moz-box-shadow:0 0 5px rgba(255,255,255,1);
+        box-shadow:0 0 5px rgba(255,255,255,1);     
+    }
+
+    .hintDiv .hintList{
+        margin-bottom: 0px;
+    }
+
+    .hintList .list-group-item{
+        color:black;
+        cursor: pointer;
+    }
+
+    .hintList .dealerShortInfo{
+        display:inline-block;
+    }
+
+    .hintList .list-group-item .clickArea{
+        position: relative;
+    }
+
+    .hintList .list-group-item .fa-radio{
+       position: absolute;
+       top:50%;
+       transform:translateY(-50%);
+        left: 0px;
+        width: 20px;
+        font-size: 20px;
+    }
+
+    .hintList .list-group-item .fa-phone{
+       position: absolute;
+       top:50%;
+       transform:translateY(-50%);    
+       right: 15px;  
+       font-size: 20px; 
+    }
+
+    .hintList .list-group-item .dealerShortInfo{
+        padding-left: 25px;     
+        padding-right: 25px;           
+    }
+
+    .dealerShortInfo .small{
+        color:rgba(0,0,0,0.5);
+    }
+
+    .confirmBtn{
+        margin-top: 15px;
+        margin-bottom: 15px;
+        min-height: 34px;        
+    }
+</style>
+
+<body>
+    <div id='main' class="container grid vertical hidden" style="height: 100%;width:100%">
+        <div id="curDealer" class="curDealer text-center">
+            <div id="dealerName" class="dealerName" data-localize="noDefaultDealer"></div>
+            <a id="dealerPhone" href="tel:10086"><i class="fa fa-phone"></i></a>
+            <div class="clearfix"></div>
+        </div>         
+        <div id="operateGroup" class="operateGroup col-1 grid vertical">
+            <div class="input-group">
+                <input id="dealerIn" data-localize="placeholder17" type="text" class="form-control" placeholder="">
+                <span class="input-group-btn">
+                    <button data-localize="search" id="dealerSearchBtn" type="button" class="btn btn-default"></button>
+                </span>
+            </div>             
+            <div id="hintDiv" class="hintDiv col-1">
+                <ul id="hintList" class="radioGroup hintList list-group">
+                    <li>加载中...</li>
+                </ul>
+            </div>      
+        </div>          
+        <button id="confirmBtn" data-localize="save" type="button" class="btn btn-default btn-block confirmBtn"></button>           
+    </div>
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src='../common/js/native.js'></script>
+<script src="../common/js/common.js?v=1"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+<script src="../common/js/handlebars.min.js"></script>
+ 
+<script id="dealerLi_template" type="text/x-handlebars-template">
+    {{#each this}}
+    <li class="list-group-item dealerItem">
+        <div class="clickArea">
+            <i class="fa fa-radio" value="{{dealerShortname}}" phone={{phoneNum}}></i>
+            <span class="dealerShortInfo">
+                <span class="dName">{{dealerFullname}}</span>
+                <div class="small">{{dealerShortname}}</div>
+            </span>                        
+        </div>
+        {{#if phoneNum}}
+            <a href="tel:{{phoneNum}}"><i class="fa fa-phone"></i></a>    
+        {{/if}}
+    </li>    
+    {{/each}}
+</script>
+
+<script >
+
+    var dealerPageHelper = {pageSize:15,pageIndex:1,hasNextPage:true};
+    var dlTemplate = Handlebars.compile($("#dealerLi_template").html());      
+
+    $(document).on('loadLanguageComplete',function(){
+        if(getParam('dealerName')){
+            $('#dealerName').text(decodeURI(getParam('dealerName')));
+            var phone = getParam('phone');
+            if(phone){
+                $('#dealerPhone').attr('href','tel:'+ phone);    
+                $('#dealerPhone').show();                 
+            }else{
+                $('#dealerPhone').hide();                                                                
+            }             
+        }else{
+            $('#dealerPhone').hide();                 
+        }     
+        $('#main').removeClass('hidden');
+    })
+
+    $(function(){     
+
+        getCurrentUser();  
+
+        $('#operateGroup').css('min-height',$('#operateGroup').height());
+
+    })
+    
+    $('#dealerSearchBtn').click(function(event) {
+        dealerPageHelper = {pageSize:15,pageIndex:1};
+        getDealerListData(function(rs){  
+            $('#hintList').html(dlTemplate(rs.list)); 
+        });
+    });
+
+
+    function getDealerListData(callback){
+        $.blockUI();
+        var url = window.TCManagePlantformServer+'dealer?pageIndex='+dealerPageHelper.pageIndex
+        +'&pageSize='+dealerPageHelper.pageSize;
+        if($('#dealerIn').val() != ''){
+            url += '&searchName='+$('#dealerIn').val();
+        }
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            contentType:'application/json',            
+            beforeSend:function(xhr){
+                setAjaxHeaderTokens(xhr);
+            },              
+        })
+        .done(function(rs) {
+            if(rs.serviceResult.operationResult == 0){
+                if(rs.list.length>0){
+                    if(rs.pagination.pageIndex * rs.pagination.pageSize < rs.pagination.totleSize){
+                        dealerPageHelper.pageIndex = rs.pagination.pageIndex+1;
+                        dealerPageHelper.hasNextPage = true;
+                    }else{
+                        dealerPageHelper.hasNextPage = false;                        
+                    }
+                    callback(rs);
+                }
+            }else{
+                nativeToast($.i18n.prop(rs.serviceResult.error.code));
+            }
+        })
+        .always(function() {
+            $.unblockUI();
+        });        
+    }
+
+
+    //单击hint选项事件
+    $(document).on('click','.dealerItem',function(){
+        $('.fa-radio').removeClass('fa-check-circle');
+        $(this).find('.fa-radio').addClass('fa-check-circle');
+        $('#dealerName').text($(this).find('.dName').text());
+        var phoneNumber = $(this).find('.fa-radio').attr('phone');
+        if(phoneNumber){
+            $('#dealerPhone').attr('href','tel:'+ $(this).find('.fa-radio').attr('phone')); 
+            $('#dealerPhone').show();                        
+        }else{
+            $('#dealerPhone').hide();                             
+        }     
+    })
+
+
+    $('#hintDiv').scroll(function(){
+        if($(this).height()+$(this)[0].scrollTop > $(this)[0].scrollHeight-1){
+            if(dealerPageHelper.hasNextPage){
+                getDealerListData(function(rs){   
+                    $('#hintList').append(dlTemplate(rs.list))                                             
+                })
+            }else{
+                nativeToast($.i18n.prop('noMore'));
+            }
+        }
+    })
+
+
+    $('#confirmBtn').click(function(event) {
+        var $selectedDealer = $('.fa-check-circle');
+        if($selectedDealer.length>0){
+            var dealerName = $selectedDealer.attr('value');
+            getCurrentUser().done(function(){updateDealer(dealerName)});
+        }else{
+            nativeAlert($.i18n.prop('dealerNotSelected'));
+        }
+
+    });
+
+
+    //更新经销商
+    function updateDealer(dealerName){     
+        window.currentUser.dealerShortname = dealerName;
+        $.ajax({
+          url: window.TCManagePlantformServer + 'user/' + currentUser.userId + '?operation=mod',
+          type: 'put',
+          dataType: 'json',
+          contentType:'application/json',
+          data: JSON.stringify(currentUser),
+          beforeSend:function(xhr){
+              setAjaxHeaderTokens(xhr);
+          },           
+          success: function(rs) {
+                if(!rs.operationResult == 0){                   
+                    nativeAlert($.i18n.prop(rs.error.code))
+                }
+                nativeToast($.i18n.prop('modifySuccess'),function(rs){
+                    location.replace('./index.html');
+                });          
+          }
+        });   
+    }
+
+</script>
+</html> 

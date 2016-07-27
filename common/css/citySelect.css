@@ -1,0 +1,114 @@
+html,body{
+    height:100%;
+}
+
+.citySelector{
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    background-color: #080b14;
+    display:none;
+    padding-top: 100px;    
+}
+
+.citySelector .header{
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid white;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+    background-color: #080b14;
+}
+
+.citySelector .header .back{
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.citySelector .header .title{
+    font-weight: bolder;
+    font-size:larger;
+}
+
+.citySelector .header .done{
+    float: right;
+    padding-right:15px;
+    padding-left:15px;
+}
+
+.citySelector .header .back:active{
+    background-color:rgba(255,255,255,0.3)
+}
+
+.citySelector .header .done:active{
+    background-color:rgba(255,255,255,0.3)
+}
+
+.citySelector .cityList{
+    clear:both;
+    width:100%;
+}
+
+.citySelector > .cityList > .province{
+    width:100%;
+    background-color: #080b14;
+}
+
+.citySelector > .cityList > .province > .ptitle{
+    height: 35px;
+    line-height: 35px;
+    padding-left: 15px;
+    background-color: rgba(255,255,255,0.4);
+    font-size:18px;
+}
+
+.citySelector > .cityList > .province > .city{
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 15px;
+    border-bottom: 1px solid #ddd;
+    clear:both;
+}
+
+.citySelector > .cityList > .province > .city:active{
+    background-color:rgba(255,255,255,0.3);
+}
+
+.citySelector > .cityList > .province > .city >.check{
+    display: inline-block;
+    float: right;
+    height: 35px;
+    line-height: 35px;
+}
+
+.citySelector > .csearch{
+    margin: 10px 0px;
+    height: 35px;
+    line-height: 35px;
+    position: fixed;
+    width: 100%;
+    margin-top: 50px;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    background-color: #080b14;
+    padding-top: 5px;
+}
+
+.citySelector > .csearch > .csearchIn{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    border-bottom: 1px solid white;
+    padding-left: 15px;
+    color: white;
+}

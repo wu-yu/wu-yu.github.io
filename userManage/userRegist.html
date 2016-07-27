@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,user-scalable=no">    
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+
+    <title data-localize="userRegistPageTitle"></title>
+    <link rel="stylesheet" type="text/css" href="../common/css/bootstrap.min.css">
+    <link href="../common/css/font-awesome.min.css" rel="stylesheet">    
+    <link href="../common/css/common.css" rel="stylesheet">    
+    <link href="../common/css/sweetalert.css" rel="stylesheet">    
+
+
+
+</head>
+
+<style type="text/css">
+    
+    .stepSection{
+        text-align: center;
+    }
+
+    .stepSection  .input-group{
+        margin: 0 auto;
+    }
+    .btn-default:disabled{
+        color: black;
+    }
+    .stepSction .button{
+        text-align: center;
+    }
+
+</style>
+
+<body>
+
+    <section id="accountRegist" class="stepSection">
+        <ul class="list-group fullWidthList">          
+            <li class="list-group-item">
+                <input id="phoneNum" data-bind-user="mobilePhone" class="noborder_in fullwidth" type="number" pattern="^[0-9]{1,20}$" data-localize="placeholder4" validate_msg="mobilephoneValidateMsg">
+            </li>
+        </ul>    
+        <div class="container text-center">
+            <button id="sendRegistYZM" data-localize="getVerificationCode"  class="btn btn-info btn-block"></button>
+        </div>           
+        <br>
+             
+    </section>
+
+</body>
+
+<script src="../common/js/jquery-1.11.0.min.js"></script>
+<script src="../common/js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script src="../common/js/sweetalert.min.js"></script>
+<script src="../common/js/native.js"></script>
+<script src="../common/js/common.js?v=1"></script>
+<script src="../common/js/jquery.blockUI.js"></script>
+<script src='../common/js/msgAuthCode.js'></script>
+<script src='./js/regist.js?v=7'></script>
+
+</html>
