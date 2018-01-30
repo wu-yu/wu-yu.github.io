@@ -53,7 +53,7 @@ Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需�
 -t 允许你对容器内的标准输入 (STDIN) 进行交互        
 -p 将容器内部使用的网络端口映射到我们使用的主机上
 ![](../images/20180129163542.png)
-通过`192.168.99.100`这个地址访问`8080`端口，可以看见运行结果：      
+注意docker的默认地址是`192.168.99.100`，访问这个地址的`8080`端口，可以看见运行结果：      
 ![](../images/20180129164017.png)       
 
 如果容器已经通过`docker run`新建并运行过了，下次要再启动，只需使用`docker start`。
@@ -80,7 +80,7 @@ docker镜像可以通过两种方式来创建。
 - 另一种是使用`Dockerfile`脚本，用`docker build`指令构建。   
 ## Dockerfile介绍
 Dockerfile是由Dockerfile指令编写的一个脚本文件，可以通过Dockfile指令指定docker的基础镜像，将打包docker镜像需要的资源文件复制到docker镜像，指定docker容器运行时执行的命令等等。       
-`官方文档地址`：[Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+**官方文档地址**：[Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 ### Dockerfile指令简介
 指令名称     | 作用     
 ------      |  -------  
@@ -96,18 +96,24 @@ EXPOSE	    | 声明端口
 VOLUME	    | 定义匿名卷     
 
 CMD和ENTRYPOINT的区别：ENTRYPOINT指定一个容器启动的时候始终会执行的命令，而CMD则指定对ENTRYPOINT的补充参数。      
-`官方解释`：[Understand how CMD and ENTRYPOINT interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact)
+**官方解释**：[Understand how CMD and ENTRYPOINT interact](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact)
 ### Dockerfile构建spring应用镜像
+1.在spring工程根目录下创建Dockerfile文件。
 ```
 FROM tomcat:8
-ADD maven-demo/hello-world/target/hello-world.war /usr/local/tomcat/webapps/
+ADD target/hello-world.war /usr/local/tomcat/webapps/
 CMD ["catalina.sh", "run"]
 ```
+2.运行maven对工程进行打包，打包完成后，运行docker build命令：
 ```
-$ docker build -t maven-demo-hello-world .
+$ docker build -t spring_demo .
 ```
+![](../images/20180130141618.png)
+docker打包成功,从体积上可以看出，spring_demo比基础镜像tomcat大了54M，差不多就是war包的体积大小。      
+![](../images/20180130143132.png)
+通过下面命令运行
 ```
-$ docker run -d -p 8080:8080 maven-demo-hello-world
+$ docker run -d -p 8080:8080 spring_demo
 ```
 ### Dockerfile构建spring boot应用镜像
 1.在spring boot 工程根目录下，创建Dockerfile文件。
@@ -135,8 +141,11 @@ docker build -t companyName/yourImageName:versionNumber .
 docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8081:8081 -t companyName/yourImageName:versionNumber
 ```
 其中`8081：8081`，第一个端口指的是应用在docker运行的端口，第二个端口指的是docker映射到宿主机上的端口。
+## docker仓库
 
 # 参考文档
 - [docker容器与虚拟机有什么区别？](https://www.zhihu.com/question/48174633)
 - [docker多个容器运行时实际占用大小](https://github.com/docker/docker.github.io/issues/1520#issuecomment-305179362)
 - [Docker — 从入门到实践（中文gitbook)](https://yeasy.gitbooks.io/docker_practice/introduction/)
+- [Docker Command-Line Interfaces reference](https://docs.docker.com/engine/reference/run/)
+- [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
