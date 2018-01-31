@@ -196,6 +196,8 @@ $ docker stop registry && docker rm -v registry
   
 默认情况下，docker容器的数据的存储是在容器内部的，但是数据存储在容器内部不方便管理，并且容器删除之后，数据会消失，而且别的应用也无法读取到容器内部的数据，不利于数据共享。        
 
+在开发阶段，也可以利用数据卷，实现文件的动态修改而不用重新打包镜像或者要到容器里面进行修改。
+
 docker提供了三种方式管理数据：`volumes(数据卷)`、`bind mounts(绑定挂载点)`以及`tmpfs mounts(临时内存挂载)`。      
 [官方文档：数据管理](https://docs.docker.com/engine/admin/volumes/)  
 
