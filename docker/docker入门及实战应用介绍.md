@@ -264,7 +264,7 @@ $ docker run -d --mount type=bind,src='/c/Users/yourUserName/testMount',target='
 ```
 如果在宿主机的`/c/Users/yourUserName/testMount`目录新建一个`test.txt`文件，那么在该容器的`/temp`就能看到。
 
-**tmpfs mounts**
+## tmpfs mounts
 docker还提供了基于内存的临时文件系统，来进行非持久化的数据的存储。但是这个功能个人感觉没什么用，应该一般都会采用分布式缓存之类的来代替。
 
 
