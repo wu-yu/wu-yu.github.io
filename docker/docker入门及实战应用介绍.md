@@ -193,17 +193,18 @@ $ docker pull localhost:5000/spring_demo
 $ docker stop registry && docker rm -v registry
 ```
 # docker数据管理
-[官方：数据管理](https://docs.docker.com/engine/admin/volumes/)    
-默认情况下，docker容器的数据的存储是在容器内部的，但是数据存储在容器内部不方便管理，并且容器删除之后，数据会消失，而且别的应用也无法读取到容器内部的数据。        
+  
+默认情况下，docker容器的数据的存储是在容器内部的，但是数据存储在容器内部不方便管理，并且容器删除之后，数据会消失，而且别的应用也无法读取到容器内部的数据，不利于数据共享。        
 
 docker提供了三种方式管理数据：`volumes(数据卷)`、`bind mounts(绑定挂载点)`以及`tmpfs mounts(临时内存挂载)`。      
+[官方文档：数据管理](https://docs.docker.com/engine/admin/volumes/)  
 
-![](../images/types-of-mounts.png)
+![](../images/types-of-mounts.png)      
 
 下面的例子都是在windows下进行的。
 
 ## volumes
-volumes是完全由docker管理的数据持久区域，独立于container之外，并且同一个volume可以在多个container之间共享,甚至可以远程共享。如果是在windows或者MAC，volumes位于`/var/lib/docker/volumes`目录。      
+volumes是完全由docker管理的数据持久区域，独立于container之外，并且同一个volume可以在多个container之间共享,甚至可以远程共享。如果是在windows或者MAC，创建的volumes位于`/var/lib/docker/volumes`目录。      
 
 **volume创建和查看**
 ```
@@ -241,6 +242,30 @@ $ docker run -d --mount type=volume,src=my-vol,target=/temp spring_demo
 挂载成功之后，如果进入`default`这个docker machine里面的`/var/lib/docker/volumes/my-vol/_data`目录新建一个名为`test.txt`的文件，然后再进入刚才挂载了`my-vol`的`spring_demo`容器的`/temp`目录，就会看到这个文件。
 
 ## bind mounts
+`bind mounts`是将宿主机的文件或者目录挂载到docker容器某个目录。       
+值得注意的是，如果是在windows或者Mac，则只能挂载Users目录下面的内容（windows是C:\Users，Mac是 /Users）
+
+**启动容器时绑定挂载点**    
+```
+$ docker run -d --mount type=bind,src='/c/Users/yourUserName/testMount',target='/temp' spring_demo
+```
+`docker inspect`结果：
+```
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/c/Users/yourUserName/testMount",
+                "Destination": "/temp",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+```
+如果在宿主机的`/c/Users/yourUserName/testMount`目录新建一个`test.txt`文件，那么在该容器的`/temp`就能看到。
+
+**tmpfs mounts**
+docker还提供了基于内存的临时文件系统，来进行非持久化的数据的存储。但是这个功能个人感觉没什么用，应该一般都会采用分布式缓存之类的来代替。
 
 
 # 参考文档
