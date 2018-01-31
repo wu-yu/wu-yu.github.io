@@ -3,7 +3,7 @@ Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻�
 ![](../images/package_software.png)
 ## docker和虚拟机的区别
 虚拟机是通过虚拟了一套 Guest OS和通过Hypervisor对虚拟机使用到的硬件资源进行协调和管理,而docker则是直接共享主机的操作系统的资源，只是进行了隔离。
-![](../images/docker_vs_virtual_machine_.jpg)   
+![](../images/docker_vs_virtual_machine.png)   
 更多阐述可见参考链接：[docker容器与虚拟机有什么区别？](https://www.zhihu.com/question/48174633)
 
 ## 为什么用docker
@@ -144,8 +144,8 @@ docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8081:8081 -t companyName/yourImage
 ## docker仓库
 
 # 参考文档
+- [Docker — 从入门到实践（中文gitbook)](https://yeasy.gitbooks.io/docker_practice/introduction/)
+- [官方：Docker Command-Line Interfaces reference](https://docs.docker.com/engine/reference/run/)
+- [官方：Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 - [docker容器与虚拟机有什么区别？](https://www.zhihu.com/question/48174633)
 - [docker多个容器运行时实际占用大小](https://github.com/docker/docker.github.io/issues/1520#issuecomment-305179362)
-- [Docker — 从入门到实践（中文gitbook)](https://yeasy.gitbooks.io/docker_practice/introduction/)
-- [Docker Command-Line Interfaces reference](https://docs.docker.com/engine/reference/run/)
-- [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
